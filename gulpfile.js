@@ -10,7 +10,7 @@ var webpack = require('webpack-stream');
 var fs = require('fs');
 
 
-gulp.task('build', gulp.series(['build-client', 'build-server', 'test']));
+gulp.task('build', gulp.series(['buildclient', 'build-server', 'test']));
 
 gulp.task('test', ['lint'], function () {
     gulp.src(['test/**/*.js'])
@@ -26,7 +26,7 @@ gulp.task('lint', function () {
     .pipe(jshint.reporter('fail'));
 });
 
-function build-client(gulp.series(['lint', 'move-client'])) {
+function buildclient(gulp.series(['lint', 'move-client'])) {
   return gulp.src(['src/client/js/app.js'])
     .pipe(uglify())
     .pipe(webpack(require('./webpack.config.js')))
@@ -51,7 +51,7 @@ gulp.task('build-server', ['lint'], function () {
 });
 
 gulp.task('watch', ['build'], function () {
-  gulp.watch(['src/client/**/*.*'], ['build-client', 'move-client']);
+  gulp.watch(['src/client/**/*.*'], ['buildclient', 'move-client']);
   gulp.watch(['src/server/*.*', 'src/server/**/*.js'], ['build-server']);
   gulp.start('run-only');
 });
