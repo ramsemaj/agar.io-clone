@@ -26,7 +26,7 @@ gulp.task('lint', function () {
     .pipe(jshint.reporter('fail'));
 });
 
-gulp.task('build-client', gulp.series(['lint', 'move-client']), function () {
+function build-client(gulp.series(['lint', 'move-client'])) {
   return gulp.src(['src/client/js/app.js'])
     .pipe(uglify())
     .pipe(webpack(require('./webpack.config.js')))
@@ -36,7 +36,7 @@ gulp.task('build-client', gulp.series(['lint', 'move-client']), function () {
       ]
     }))
     .pipe(gulp.dest('bin/client/js/'));
-});
+};  
 
 gulp.task('move-client', function () {
   return gulp.src(['src/client/**/*.*', '!client/js/*.js'])
