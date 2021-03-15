@@ -10,7 +10,7 @@ var webpack = require('webpack-stream');
 var fs = require('fs');
 
 
-gulp.task('build', ['build-client', 'build-server', 'test']);
+gulp.task('build', series(['build-client', 'build-server', 'test']));
 
 gulp.task('test', ['lint'], function () {
     gulp.src(['test/**/*.js'])
@@ -26,7 +26,7 @@ gulp.task('lint', function () {
     .pipe(jshint.reporter('fail'));
 });
 
-gulp.task('build-client', ['lint', 'move-client'], function () {
+gulp.task('build-client', series(['lint', 'move-client']), function () {
   return gulp.src(['src/client/js/app.js'])
     .pipe(uglify())
     .pipe(webpack(require('./webpack.config.js')))
